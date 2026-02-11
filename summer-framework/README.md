@@ -50,6 +50,11 @@ Summer Framework, Spring benzeri temel konseptleri minimum bagimlilikla uygulaya
 - Optional request timeout (`504`)
 - Socket backlog ayari
 
+### 7. Standart Bootstrap
+- `SummerApplication.run(AppConfig.class, args)` ile uygulama baslatma
+- `application.properties` uzerinden merkezi server/tuning ayarlari
+- Komut satiri override destegi (`--key=value`)
+
 ## Calistirma
 
 Gereksinimler:
@@ -57,7 +62,7 @@ Gereksinimler:
 - Maven 3.9+
 
 ```bash
-mvn -pl example -am -DskipTests compile exec:java -Dexec.args="8080"
+mvn -pl example -am -DskipTests compile exec:java
 ```
 
 ## Endpoint Ornekleri
@@ -88,20 +93,28 @@ curl -s 'http://localhost:8080/api/search?tag=java&tag=framework&limit=5' \
 
 ## Tuning ile Calistirma
 
-`RestMain` argumanlari:
-1. `port`
-2. `requestTimeoutMillis`
-3. `maxConcurrentRequests`
-4. `coreThreads`
-5. `maxThreads`
-6. `queueCapacity`
-7. `rejectionPolicy`
-8. `socketBacklog`
+Konfigurasyon kaynagi:
+- `example/src/main/resources/application.properties`
 
 ```bash
 mvn -pl example -am -DskipTests compile exec:java \
-  -Dexec.args="8080 1000 256 8 32 500 ABORT 1024"
+  -Dexec.args="--server.port=8080 --summer.server.request-timeout-millis=1000 --summer.server.max-concurrent-requests=256 --summer.server.core-threads=8 --summer.server.max-threads=32 --summer.server.queue-capacity=500 --summer.server.rejection-policy=ABORT --summer.server.socket-backlog=1024"
 ```
+
+Desteklenen property anahtarlari:
+- `server.port`
+- `summer.server.request-timeout-millis`
+- `summer.server.max-concurrent-requests`
+- `summer.server.core-threads`
+- `summer.server.max-threads`
+- `summer.server.queue-capacity`
+- `summer.server.keep-alive-seconds`
+- `summer.server.rejection-policy`
+- `summer.server.socket-backlog`
+
+Geriye donuk uyumluluk:
+- Eski positional arg formati hala desteklenir:
+  - `port requestTimeoutMillis maxConcurrentRequests coreThreads maxThreads queueCapacity rejectionPolicy socketBacklog`
 
 ## Kutuphane Paketleme
 
@@ -114,7 +127,7 @@ mvn -pl core -am -DskipTests install
 ```
 
 Artifact:
-- `core/target/summer-framework-core-0.1.0.jar`
+- `core/target/summer-framework-core-0.1.1.jar`
 
 ## Dagitim / Publish
 

@@ -5,7 +5,7 @@
 
   <groupId>io.summerframework.samples</groupId>
   <artifactId>todo-sample-app</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <packaging>jar</packaging>
 
   <name>todo-sample-app</name>
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>io.summerframework</groupId>
       <artifactId>summer-framework-core</artifactId>
-      <version>0.1.0</version>
+      <version>0.1.1</version>
     </dependency>
   </dependencies>
 

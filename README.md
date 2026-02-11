@@ -33,6 +33,9 @@ sample-project/ -> Framework'u disaridan kullanan bagimsiz ornek
   - overload guard (`503 Service Unavailable`)
   - request timeout (`504 Gateway Timeout`)
 - Standart JSON API envelope (success/error, timestamp, path)
+- Standart bootstrap
+  - `SummerApplication.run(...)`
+  - `application.properties` tabanli ayar + CLI override
 
 ## Hizli Baslangic
 
@@ -42,7 +45,7 @@ Gereksinimler:
 
 ```bash
 cd summer-framework
-mvn -pl example -am -DskipTests compile exec:java -Dexec.args="8080"
+mvn -pl example -am -DskipTests compile exec:java
 ```
 
 Sunucu kalktiktan sonra test:
@@ -60,22 +63,15 @@ curl -s 'http://localhost:8080/api/search?tag=java&tag=framework&limit=5' \
 
 ## Runtime Tuning
 
-`RestMain` arguman sirasi:
-1. `port` (default: `8080`)
-2. `requestTimeoutMillis` (default: `0`, kapali)
-3. `maxConcurrentRequests` (default: `512`)
-4. `coreThreads` (opsiyonel)
-5. `maxThreads` (opsiyonel)
-6. `queueCapacity` (opsiyonel)
-7. `rejectionPolicy` (`ABORT`, `CALLER_RUNS`, `DISCARD_OLDEST`)
-8. `socketBacklog` (opsiyonel)
+Varsayilan konfigurasyon:
+- `summer-framework/example/src/main/resources/application.properties`
 
 Ornek:
 
 ```bash
 cd summer-framework
 mvn -pl example -am -DskipTests compile exec:java \
-  -Dexec.args="8080 1000 256 8 32 500 ABORT 1024"
+  -Dexec.args="--server.port=8080 --summer.server.request-timeout-millis=1000 --summer.server.max-concurrent-requests=256 --summer.server.core-threads=8 --summer.server.max-threads=32 --summer.server.queue-capacity=500 --summer.server.rejection-policy=ABORT --summer.server.socket-backlog=1024"
 ```
 
 ## Kutuphane Olarak Paketleme
@@ -100,7 +96,7 @@ Dependency:
 <dependency>
   <groupId>io.summerframework</groupId>
   <artifactId>summer-framework-core</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
