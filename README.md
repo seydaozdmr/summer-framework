@@ -10,6 +10,7 @@ Bu repo yalnizca Summer Framework kodunu icerir. Spring Boot, Tomcat veya Servle
 summer-framework/
   core/      -> Framework cekirdegi (IoC + web runtime)
   example/   -> Ornek uygulama ve endpoint'ler
+sample-project/ -> Framework'u disaridan kullanan bagimsiz ornek
 ```
 
 ## One Cikan Ozellikler
