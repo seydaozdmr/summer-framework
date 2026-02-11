@@ -1,0 +1,4 @@
+summer:
+  framework:
+    enabled: true
+    request-id-header: X-Request-Id
